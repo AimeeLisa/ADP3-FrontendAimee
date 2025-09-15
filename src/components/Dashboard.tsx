@@ -13,7 +13,7 @@ export function Dashboard() {
   const stats = [
     {
       title: 'Total Revenue',
-      value: '$12,847',
+      value: 'R12,847',
       change: '+12.5%',
       icon: DollarSign,
       trend: 'up'
@@ -42,11 +42,11 @@ export function Dashboard() {
   ]
 
   const recentOrders = [
-    { id: 'ORD-001', customer: 'John Smith', book: 'The Great Gatsby', status: 'processing', total: '$24.99' },
-    { id: 'ORD-002', customer: 'Sarah Jones', book: 'To Kill a Mockingbird', status: 'shipped', total: '$19.99' },
-    { id: 'ORD-003', customer: 'Mike Wilson', book: '1984', status: 'delivered', total: '$22.50' },
-    { id: 'ORD-004', customer: 'Emily Brown', book: 'Pride and Prejudice', status: 'processing', total: '$18.99' },
-    { id: 'ORD-005', customer: 'David Lee', book: 'The Catcher in the Rye', status: 'pending', total: '$21.99' }
+    { id: 'ORD-001', customer: 'John Smith', book: 'The Great Gatsby', status: 'processing', total: 'R249.99' },
+    { id: 'ORD-002', customer: 'Sarah Jones', book: 'To Kill a Mockingbird', status: 'shipped', total: 'R199.99' },
+    { id: 'ORD-003', customer: 'Mike Wilson', book: '1984', status: 'delivered', total: 'R225.50' },
+    { id: 'ORD-004', customer: 'Emily Brown', book: 'Pride and Prejudice', status: 'processing', total: 'R189.99' },
+    { id: 'ORD-005', customer: 'David Lee', book: 'The Catcher in the Rye', status: 'pending', total: 'R219.99' }
   ]
 
   const getStatusIcon = (status: string) => {

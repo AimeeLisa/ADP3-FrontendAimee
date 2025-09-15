@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { API_BASE_URL } from '../api'
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Card, CardContent } from './ui/card'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -25,40 +25,39 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   })
 
   const handleCustomerLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch(`${API_BASE_URL}/users/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: customerForm.email,
           password: customerForm.password,
         }),
-      });
+      })
       if (response.ok) {
-        const user = await response.json();
-  onLogin('customer', { id: user.userId, name: user.userFirstName + ' ' + user.userLastName, email: user.contact.email });
+        const user = await response.json()
+        onLogin('customer', {
+          id: user.userId,
+          name: user.userFirstName + ' ' + user.userLastName,
+          email: user.contact.email,
+        })
       } else {
-        alert('Login failed: ' + (await response.text()));
+        alert('Login failed: ' + (await response.text()))
       }
     } catch (err) {
-      alert('Login error: ' + err);
+      alert('Login error: ' + err)
     }
   }
 
-  // Registration handler
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch(`${API_BASE_URL}/users/create`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: undefined, // Let backend generate or add logic if needed
+          userId: undefined,
           userFirstName: registerForm.firstName,
           userLastName: registerForm.lastName,
           email: registerForm.email,
@@ -69,51 +68,47 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             password: registerForm.password,
           },
         }),
-      });
+      })
       if (response.ok) {
-        setShowRegister(false);
-        setRegisterForm({ firstName: '', lastName: '', email: '', phoneNumber: '', address: '', password: '' });
-        alert('Registration successful! You can now log in.');
+        setShowRegister(false)
+        setRegisterForm({ firstName: '', lastName: '', email: '', phoneNumber: '', address: '', password: '' })
+        alert('Registration successful! You can now log in.')
       } else {
-        const error = await response.text();
-        alert('Registration failed: ' + error);
+        const error = await response.text()
+        alert('Registration failed: ' + error)
       }
     } catch (err) {
-      alert('Registration error: ' + err);
+      alert('Registration error: ' + err)
     }
   }
 
   const handleAdminLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch(`${API_BASE_URL}/users/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: adminForm.email,
           password: adminForm.password,
         }),
-      });
+      })
       if (response.ok) {
-        const user = await response.json();
+        const user = await response.json()
         if (user.role && user.role.toLowerCase() === 'admin') {
-          onLogin('admin', { id: user.userId, name: user.userFirstName + ' ' + user.userLastName, email: user.contact.email });
+          onLogin('admin', {
+            id: user.userId,
+            name: user.userFirstName + ' ' + user.userLastName,
+            email: user.contact.email,
+          })
         } else {
-          alert('Access denied: You are not an admin.');
+          alert('Access denied: You are not an admin.')
         }
       } else {
-        alert('Login failed: ' + (await response.text()));
+        alert('Login failed: ' + (await response.text()))
       }
     } catch (err) {
-      alert('Login error: ' + err);
-    }
-  }
-
-  const handleQuickLogin = (userType: 'customer' | 'admin') => {
-    if (userType === 'customer') {
-      onLogin('customer', { id: 1, name: 'Book Lover', email: 'customer@example.com' })
+      alert('Login error: ' + err)
     }
   }
 
@@ -276,13 +271,6 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                     <div className="text-center flex flex-col gap-2">
                       <Button 
                         variant="outline" 
-                        onClick={() => handleQuickLogin('customer')}
-                        className="text-orange-600 border-orange-200 hover:bg-orange-50"
-                      >
-                        Quick Browse
-                      </Button>
-                      <Button 
-                        variant="outline" 
                         onClick={() => setShowRegister(true)}
                         className="text-orange-600 border-orange-200 hover:bg-orange-50"
                       >
@@ -328,7 +316,6 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                         Access Admin Dashboard
                       </Button>
                     </form>
-                    {/* Removed quick admin login for security */}
                   </div>
                 </TabsContent>
               </Tabs>

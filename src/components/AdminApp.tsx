@@ -5,9 +5,8 @@ import { OrderCreation } from './OrderCreation'
 import { OrderManagement } from './OrderManagement'
 import BookCatalog from './BookCatalog'
 import { SupplyOrders } from './SupplyOrders'
-import { BusinessReports } from './BusinessReports'
 
-type AdminView = 'dashboard' | 'create-order' | 'manage-orders' | 'catalog' | 'supply-orders' | 'reports'
+import { AdminView } from '../types/AdminView'
 
 interface User {
   id: number;
@@ -36,8 +35,6 @@ export function AdminApp({ user, onLogout }: AdminAppProps) {
         return <BookCatalog />
       case 'supply-orders':
         return <SupplyOrders />
-      case 'reports':
-        return <BusinessReports />
       default:
         return <AdminDashboard />
     }
@@ -47,7 +44,7 @@ export function AdminApp({ user, onLogout }: AdminAppProps) {
     <div className="flex h-screen bg-gradient-to-br from-orange-25 via-amber-25 to-yellow-25">
       <AdminSidebar 
         activeView={activeView} 
-        onViewChange={setActiveView}
+        onViewChange={(view: AdminView) => setActiveView(view)}
         user={user}
         onLogout={onLogout}
       />

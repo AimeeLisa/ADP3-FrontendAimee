@@ -110,12 +110,28 @@ export function UserProfile({ userId, onLogout }: UserProfileProps) {
   if (error) return <Card><CardContent className="text-red-600">{error}</CardContent></Card>;
   if (!user) return null;
 
+  // If user.books is not available, you may need to fetch books separately
+  const books = (user as any)?.books || []
+  const totalQuantity = books.reduce((sum: number, book: any) => sum + Number(book.quantity), 0)
+  const subtotal = books.reduce((sum: number, book: any) => sum + Number(book.quantity) * Number(book.price), 0)
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Profile</CardTitle>
       </CardHeader>
       <CardContent>
+        {/* Add summary section here */}
+        {books.length > 0 && (
+          <div className="mb-4 flex gap-8">
+            <div>
+              <span className="font-semibold">Total Quantity:</span> {totalQuantity}
+            </div>
+            <div>
+              <span className="font-semibold">Subtotal Value:</span> R{subtotal.toFixed(2)}
+            </div>
+          </div>
+        )}
         {editMode ? (
           <form onSubmit={handleUpdate} className="space-y-4">
             <Input name="userFirstName" value={form.userFirstName} onChange={handleChange} placeholder="First Name" required />
